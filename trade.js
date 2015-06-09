@@ -40,36 +40,32 @@ var TradeControl = function(game) {
 			if (key === 38) {
 				if (trade.buy) {
 					trade.itemPt -= 2;
-					trade.state = "anime";
 				} else {
 					trade.sellPt -= 2;
-					trade.state = "anime";
 				}
-
+				trade.state = "anime";
 			} else if (key === 40) {
 				if (trade.buy) {
 					trade.itemPt += 2;
-					trade.state = "anime";
 				} else {
 					trade.sellPt += 2;
-					trade.state = "anime";
 				}
+				trade.state = "anime";
 			} else if (key === 37) {
 				if (trade.buy) {
 					trade.itemPt--;
-					trade.state = "anime";
 				} else {
 					trade.sellPt--;
-					trade.state = "anime";
 				}
+				trade.state = "anime";
 			} else if (key === 39) {
 				if (trade.buy) {
 					trade.itemPt++;
-					trade.state = "anime";
 				} else {
 					trade.sellPt++;
-					trade.state = "anime";
+
 				}
+				trade.state = "anime";
 			} else if (key === 13) {
 				if (trade.buy) {
 					buy(trade.itemPt);
@@ -96,7 +92,7 @@ var TradeControl = function(game) {
 				trade.itemPt = trade.itemPt >= trade.items.length ? trade.items.length - 1 : trade.itemPt;
 			} else {
 				trade.sellPt = trade.sellPt < 0 ? 0 : trade.sellPt;
-				trade.sellPt = trade.sellPt >= game.player.items.length ? game.player.items.length - 1: trade.sellPt;
+				trade.sellPt = trade.sellPt >= game.player.items.length ? game.player.items.length - 1 : trade.sellPt;
 			}
 		}
 	});
@@ -198,7 +194,6 @@ var TradePainter = function(game) {
 				ctx.textAlign = "left";
 				ctx.fillStyle = "#f0f0f0";
 				if (trade.buy) {
-					console.log(items[pt], pt);
 					desc = Items[items[pt]].desc;
 				} else if (game.player.items.length > 0) {
 					desc = Items[items[pt].type].desc;

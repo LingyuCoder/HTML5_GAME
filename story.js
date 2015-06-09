@@ -32,11 +32,22 @@ var StoryControl = function(game) {
 		game.battle = new Battle(game.player, new Enermy(story.detail.enermy), false);
 		game.state = "battle";
 	};
+	var animeHandler = function(story){
+		game.anime = new Anime(Animes[story.detail.anime]);
+		game.state = "anime";
+	};
+	var endHandler = function(story){
+		game.state = "end";
+		game.end = new End("win");
+	};
 	var handlers = {
 		ground: groundHandler,
 		dialog: dialogHandler,
-		battle: battleHandler
+		battle: battleHandler,
+		anime: animeHandler,
+		end : endHandler
 	};
+
 	this.tick = function() {
 		if (game.state === "story") {
 			var story = Stories[game.story.storyPt];

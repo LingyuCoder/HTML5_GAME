@@ -102,7 +102,6 @@ var BattleControl = function(game) {
 						battle.state = "enermy";
 						battle.anime = true;
 					} else if (cho === "escape") {
-						console.log(battle.escapable);
 						if (battle.escapable) {
 							battle.state = "end";
 						} else {

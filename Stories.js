@@ -1,78 +1,78 @@
 var Stories = (function() {
+	// return [{
+	// 	type: "dialog",
+	// 	detail: {
+	// 		npc: {
+	// 			name: "师傅",
+	// 			detail: Npcs["master"],
+	// 			dialog: 2,
+	// 			pos: [-1, -1],
+	// 			dir: "right",
+	// 		}
+	// 	},
+	// 	require: function(game) {
+	// 		return true;
+	// 	}
+	// }, {
+	// 	type: "ground",
+	// 	detail: {
+	// 		map: "start",
+	// 		pos: [10, 10],
+	// 		dir: "left"
+	// 	},
+	// 	require: function(game) {
+	// 		return true;
+	// 	}
+	// }, {
+	// 	type: "battle",
+	// 	detail: {
+	// 		enermy: 1
+	// 	},
+	// 	require: function(game) {
+	// 		return true;
+	// 	}
+	// }, {
+	// 	type: "battle",
+	// 	detail: {
+	// 		enermy: 2
+	// 	},
+	// 	require: function(game) {
+	// 		return true;
+	// 	}
+	// }, {
+	// 	type: "battle",
+	// 	detail: {
+	// 		enermy: 3
+	// 	},
+	// 	require: function(game) {
+	// 		return true;
+	// 	}
+	// }, {
+	// 	type: "battle",
+	// 	detail: {
+	// 		enermy: 4
+	// 	},
+	// 	require: function(game) {
+	// 		return true;
+	// 	}
+	// }, {
+	// 	type: "battle",
+	// 	detail: {
+	// 		enermy: 5
+	// 	},
+	// 	require: function(game) {
+	// 		return false;
+	// 	}
+	// }, {
+	// 	type: "battle",
+	// 	detail: {
+	// 		enermy: 6
+	// 	},
+	// 	require: function(game) {
+	// 		return false;
+	// 	}
+	// }];
 	return [{
-		type: "dialog",
-		detail: {
-			npc: {
-				name: "师傅",
-				detail: Npcs["master"],
-				dialog: 2,
-				pos: [-1, -1],
-				dir: "right",
-			}
-		},
-		require: function(game) {
-			return true;
-		}
-	}, {
-		type: "ground",
-		detail: {
-			map: "start",
-			pos: [10, 10],
-			dir: "left"
-		},
-		require: function(game) {
-			return true;
-		}
-	}, /*{
-		type: "battle",
-		detail: {
-			enermy: 1
-		},
-		require: function(game) {
-			return true;
-		}
-	}, {
-		type: "battle",
-		detail: {
-			enermy: 2
-		},
-		require: function(game) {
-			return true;
-		}
-	}, {
-		type: "battle",
-		detail: {
-			enermy: 3
-		},
-		require: function(game) {
-			return true;
-		}
-	}, {
-		type: "battle",
-		detail: {
-			enermy: 4
-		},
-		require: function(game) {
-			return true;
-		}
-	}, */{
-		type: "battle",
-		detail: {
-			enermy: 5
-		},
-		require: function(game) {
-			return false;
-		}
-	}/*, {
-		type: "battle",
-		detail: {
-			enermy: 6
-		},
-		require: function(game) {
-			return false;
-		}
-	}, */];
-	/*return [{
 		type: "dialog",
 		detail: {
 			npc: {name: "师傅", detail: Npcs["master"], dialog: 2, pos: [-1, -1], dir: "right", }
@@ -161,5 +161,5 @@ var Stories = (function() {
 		require: function(game) {
 			return false;
 		}
-	}];*/
+	}];
 }());

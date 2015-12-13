@@ -1,8 +1,8 @@
 var Player = function() {
 	this.name = "天镶";
-	this.maxHp = 1050;
-	this.hp = 1050;
-	this.atk = 520;
+	this.maxHp = 50;
+	this.hp = 50;
+	this.atk = 20;
 	this.skills = [];
 	this.exp = 0;
 	this.needExp = 100;

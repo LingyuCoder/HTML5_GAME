@@ -52,14 +52,18 @@ var InfoPainter = function(game) {
 			PainterHelper.drawPanel(0, 160, 720, 220);
 			PainterHelper.drawPanel(0, 380, 720, 100);
 			drawAvatar(2, 2, 156, 156);
-			ctx.font = "italic bolder 30px 'Microsoft YaHei'";
+			ctx.font = "bolder 20px 'Microsoft YaHei'";
 			ctx.fillStyle = "#f0f0f0";
-			PainterHelper.drawText("姓名：" + player.name, 190, 50, 250);
-			PainterHelper.drawText("等级：" + player.level, 450, 50, 250);
-			PainterHelper.drawText("ATK：" + player.atk, 190, 90, 250);
-			PainterHelper.drawText("EXP：" + player.exp + "/" + player.needExp, 450, 90, 250);
-			PainterHelper.drawText("HP：" + player.hp + "/" + player.maxHp, 190, 130, 250);
-			PainterHelper.drawText("金币：" + player.money, 450, 130, 250);
+			PainterHelper.drawText("姓名：" + player.name, 190, 30, 250);
+			PainterHelper.drawText("等级：" + player.level, 450, 30, 250);
+			PainterHelper.drawText("ATK：" + player.atk, 190, 55, 250);
+			PainterHelper.drawText("EXP：" + player.exp + "/" + player.needExp, 450, 55, 250);
+			PainterHelper.drawText("HP：" + player.hp + "/" + player.maxHp, 190, 80, 250);
+			PainterHelper.drawText("金币：" + player.money, 450, 80, 250);
+			PainterHelper.drawText("武器：" + (player.equip.arm === -1 ? "无": Items[player.equip.arm].name), 190, 105, 250);
+			PainterHelper.drawText("防具：" + (player.equip.body === -1 ? "无": Items[player.equip.body].name), 450, 105, 250);
+			PainterHelper.drawText("项链：" + (player.equip.neck === -1 ? "无": Items[player.equip.neck].name), 190, 130, 250);
+			PainterHelper.drawText("指环：" + (player.equip.ring === -1 ? "无": Items[player.equip.ring].name), 450, 130, 250);
 			ctx.font = "bolder 25px 'Microsoft YaHei'";
 			if (player.items.length > 0) {
 				var start;

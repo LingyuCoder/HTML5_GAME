@@ -141,12 +141,12 @@ var GroundControl = function(game) {
 	this.tick = function() {
 		var curDoor;
 		var curTreasure;
+		if (game.story.canToNext(game)) {
+			game.story.toNext(game);
+			game.state = "story";
+			return;
+		}
 		if (move()) {
-			if (game.story.canToNext(game)) {
-				game.story.toNext(game);
-				game.state = "story";
-				return;
-			}
 			curDoor = atEndArea();
 			if (curDoor) {
 				game.ground = new Ground(game.player, Maps[curDoor.to]);
@@ -216,68 +216,66 @@ var GroundPainter = function(game) {
 		};
 	};
 	this.paint = function() {
-		if (game.ground.frame % 1 === 0) {
-			if (game.ground.state === "treasure") {
-				PainterHelper.drawPanel(0, 330, 720, 150);
-				PainterHelper.drawStaticAvatar(7, 337, 136, 136, true);
-				ctx.font = "italic bolder 20px 'Microsoft YaHei'";
-				ctx.fillStyle = "#f0f0f0";
-				if (game.ground.treasure.item === "money") {
-					PainterHelper.drawText("获得金币：" + game.ground.treasure.amount, 160, 370, 530);
-				} else {
-					PainterHelper.drawText("获得物品：" + Items[game.ground.treasure.item].name + " " + game.ground.treasure.amount + "个", 160, 370, 530);
-				}
-				return;
-			}
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			var ground = game.ground;
-			var playerFrame = (Math.floor(ground.frame / 6)) % (playerFrames[ground.state][ground.dir].length);
-			var px;
-			var py;
-			var bx;
-			var by;
-			var i;
-			var curNpc;
-			var treasure;
-			var pos;
-			if (ground.posPx[0] < canvas.width / 2) {
-				px = ground.posPx[0];
-				bx = 0;
-			} else if (ground.posPx[0] > ground.map.width * 48 - canvas.width / 2) {
-				px = ground.posPx[0] - ground.map.width * 48 + canvas.width;
-				bx = ground.map.width * 48 - canvas.width;
+		if (game.ground.state === "treasure") {
+			PainterHelper.drawPanel(0, 330, 720, 150);
+			PainterHelper.drawStaticAvatar(7, 337, 136, 136, true);
+			ctx.font = "italic bolder 20px 'Microsoft YaHei'";
+			ctx.fillStyle = "#f0f0f0";
+			if (game.ground.treasure.item === "money") {
+				PainterHelper.drawText("获得金币：" + game.ground.treasure.amount, 160, 370, 530);
 			} else {
-				px = canvas.width / 2;
-				bx = ground.posPx[0] - canvas.width / 2;
+				PainterHelper.drawText("获得物品：" + Items[game.ground.treasure.item].name + " " + game.ground.treasure.amount + "个", 160, 370, 530);
 			}
-			if (ground.posPx[1] < canvas.height / 2) {
-				py = ground.posPx[1];
-				by = 0;
-			} else if (ground.posPx[1] > ground.map.height * 48 - canvas.height / 2) {
-				py = ground.posPx[1] - ground.map.height * 48 + canvas.height;
-				by = ground.map.height * 48 - canvas.height;
+			return;
+		}
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		var ground = game.ground;
+		var playerFrame = (Math.floor(ground.frame / 6)) % (playerFrames[ground.state][ground.dir].length);
+		var px;
+		var py;
+		var bx;
+		var by;
+		var i;
+		var curNpc;
+		var treasure;
+		var pos;
+		if (ground.posPx[0] < canvas.width / 2) {
+			px = ground.posPx[0];
+			bx = 0;
+		} else if (ground.posPx[0] > ground.map.width * 48 - canvas.width / 2) {
+			px = ground.posPx[0] - ground.map.width * 48 + canvas.width;
+			bx = ground.map.width * 48 - canvas.width;
+		} else {
+			px = canvas.width / 2;
+			bx = ground.posPx[0] - canvas.width / 2;
+		}
+		if (ground.posPx[1] < canvas.height / 2) {
+			py = ground.posPx[1];
+			by = 0;
+		} else if (ground.posPx[1] > ground.map.height * 48 - canvas.height / 2) {
+			py = ground.posPx[1] - ground.map.height * 48 + canvas.height;
+			by = ground.map.height * 48 - canvas.height;
+		} else {
+			py = canvas.height / 2;
+			by = ground.posPx[1] - canvas.height / 2;
+		}
+		ctx.drawImage(Resources.images.maps[game.ground.map.rc_index].map, bx / 2, by / 2, canvas.width / 2, canvas.height / 2, 0, 0, canvas.width, canvas.height);
+
+		for (i = ground.map.treasures.length; i--;) {
+			treasure = ground.map.treasures[i];
+			pos = calPos(treasure.pos[0], treasure.pos[1], bx, by);
+			if (treasure.opened) {
+				ctx.drawImage(Resources.images.other.treasure, 0, 24, 24, 24, pos.x, pos.y, 48, 48);
 			} else {
-				py = canvas.height / 2;
-				by = ground.posPx[1] - canvas.height / 2;
+				ctx.drawImage(Resources.images.other.treasure, 0, 0, 24, 24, pos.x, pos.y, 48, 48);
 			}
-			ctx.drawImage(Resources.images.maps[game.ground.map.rc_index].map, bx, by, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+		}
 
-			for (i = ground.map.treasures.length; i--;) {
-				treasure = ground.map.treasures[i];
-				pos = calPos(treasure.pos[0], treasure.pos[1], bx, by);
-				if (treasure.opened) {
-					ctx.drawImage(Resources.images.other.treasure, 0, 24, 24, 24, pos.x, pos.y, 48, 48);
-				} else {
-					ctx.drawImage(Resources.images.other.treasure, 0, 0, 24, 24, pos.x, pos.y, 48, 48);
-				}
-			}
-
-			ctx.drawImage(Resources.images.player.ground, 0, playerFrames[ground.state][ground.dir][playerFrame] * 24, 24, 24, px, py, 48, 48);
-			for (i = ground.map.npcs.length; i--;) {
-				curNpc = ground.map.npcs[i];
-				pos = calPos(curNpc.pos[0], curNpc.pos[1], bx, by);
-				ctx.drawImage(Resources.images.other.npcs, 0, 96 * curNpc.detail.rc_index + 24 * npcFrames[curNpc.dir], 24, 24, pos.x, pos.y, 48, 48);
-			}
+		ctx.drawImage(Resources.images.player.ground, 0, playerFrames[ground.state][ground.dir][playerFrame] * 24, 24, 24, px, py, 48, 48);
+		for (i = ground.map.npcs.length; i--;) {
+			curNpc = ground.map.npcs[i];
+			pos = calPos(curNpc.pos[0], curNpc.pos[1], bx, by);
+			ctx.drawImage(Resources.images.other.npcs, 0, 96 * curNpc.detail.rc_index + 24 * npcFrames[curNpc.dir], 24, 24, pos.x, pos.y, 48, 48);
 		}
 		game.ground.frame++;
 	};
